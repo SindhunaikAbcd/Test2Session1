@@ -9,5 +9,3 @@ int main()
   printf("addition of %d+%d is %f\n",num2,num1,sum);
   return 0;
 }
-
-p1
