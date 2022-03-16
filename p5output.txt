@@ -1,76 +1,46 @@
-gcc -g p4original.c
- gdb a.out
-GNU gdb (Ubuntu 8.1.1-0ubuntu1) 8.1.1
-Copyright (C) 2018 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-<http://www.gnu.org/software/gdb/documentation/>.
-For help, type "help".
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from a.out...done.
-(gdb) b main
-Breakpoint 1 at 0x805: file p4original.c, line 27.
-(gdb) r
-Starting program: /home/runner/Test2Session1-1/a.out 
-warning: Error disabling address space randomization: Operation not permitted
+#include <stdio.h>
+int input()
+{
+  int n;
+  printf("Enter the number\n");
+  scanf("%d",&n);
+  return n;
+}
 
-Breakpoint 1, main () at p4original.c:27
-27    a=input();
- 
- gcc -g p5original.c
- gdb a.out
-GNU gdb (Ubuntu 8.1.1-0ubuntu1) 8.1.1
-Copyright (C) 2018 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-<http://www.gnu.org/software/gdb/documentation/>.
-For help, type "help".
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from a.out...done.
-(gdb) b main
-Breakpoint 1 at 0x82d: file p5original.c, line 28.
-(gdb) r
-Starting program: /home/runner/Test2Session1-1/a.out 
-warning: Error disabling address space randomization: Operation not permitted
+void init_array(int n, int a[n])
+{
+  for(int i=0;i<n;i++)
+    a[i] = i;
+  a[1]=0;
+}
 
-Breakpoint 1, main () at p5original.c:28
-28  {
-(gdb) n
-30    input(&a,&b,&c);
-(gdb) n
-Enter 3 numbers:
-3
-4
-5
-31    cmp(a, b, c, &large);
-(gdb) n
-32    output(a,b,c,large);
-(gdb) n
-The largest number is 5
-33    return 0;
-(gdb) n
-34  }(gdb) n
-__libc_start_main (main=0x555b8cc00825 <main>, argc=1, argv=0x7ffe56f763b8, 
-    init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, 
-    stack_end=0x7ffe56f763a8) at ../csu/libc-start.c:344
-344 ../csu/libc-start.c: No such file or directory.
-(gdb) q
-A debugging session is active.
+void ets(int n, int a[n])
+{
+  int i=0;
+   /* Find next non-zero number */
+  while(i<sqrt(n)){
+   for(;a[i]==0 ;i++);
+   for(int k=i+i;k<n;k += i)
+     a[i] = 0;
+   i++;
+  }
+}
 
-    Inferior 1 [process 2516] will be killed.
 
-Quit anyway? (y or n) y
+void display(int n, int a[n])
+{
+  for(int i=0;i<n;i++)
+    if(a[i]!=0)
+      printf("%d ",a[i]);
+  printf("\n");
+}
+
+int main()
+{
+  int n;
+  n=input();
+  int a[n];
+  init_array(n,a);
+  ets(n,a);
+  display(n,a);
+  return 0;

@@ -1,34 +1,49 @@
-#include<stdio.h>
-void input(int *a, int *b, int *c)
+#include <stdio.h>
+int input()
 {
-  printf("Enter 3 numbers:\n");
-  scanf("%d %d %d", a, b, c);
+  int n;
+  printf("Enter the number\n");
+  scanf("%d",&n);
+  return n;
 }
-void cmp(int a, int b, int c, int *result)
+
+void init_array(int n, int a[n])
 {
-  if(a>b && a>c)
-  {
-    *result=a;
-  }
-  else if(b>c)
-  {
-    *result=b;
-  }
-  else
-  { 
-    *result=c;
-  }
-  
+  for(int i=0;i<n;i++)
+    a[i] = i;
+  a[1]=0;
 }
-void output(int a, int b, int c, int large)
+
+void ets(int n, int a[n])
 {
-  printf("The largest number is %d\n",large);
+  int i=0;
+   /* Find next non-zero number */
+  while(i<sqrt(n)){
+   for(;a[i]==0 ;i++);
+   for(int k=i+i;k<n;k += i)
+     a[i] = 0;
+   i++;
+  }
 }
+
+
+void display(int n, int a[n])
+{
+  for(int i=0;i<n;i++)
+    if(a[i]!=0)
+      printf("%d ",a[i]);
+  printf("\n");
+}
+
 int main()
 {
-  int a, b, c, large;
-  input(&a,&b,&c);
-  cmp(a, b, c, &large);
-  output(a,b,c,large);
+  int n;
+  n=input();
+  int a[n];
+  init_array(n,a);
+  ets(n,a);
+  display(n,a);
   return 0;
 }
+
+
